@@ -1,0 +1,8 @@
+{
+  "id": "synthwave",
+  "name": "Synthwave",
+  "version": "1.0.0",
+  "author": "kewe87",
+  "description": "Neon, Sonnenuntergang, Gitterboden",
+  "glyphs": { "A": "A", "B": "B", "X": "X", "Y": "Y", "LB": "LB", "RB": "RB" }
+}

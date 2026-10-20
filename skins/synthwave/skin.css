@@ -1,0 +1,331 @@
+/* Synthwave: neon on deep purple, a striped sunset over a perspective grid floor.
+   Everything is static; nothing animates while idle. Focus is shown by a filled, bright surface
+   (dark text on pink/orange) so it stays readable from the couch. */
+
+:root[data-skin="user:synthwave"] {
+  --bg: #12001f;
+  --fg: #fff4ff;
+  --muted: rgba(255, 233, 255, 0.82);
+  --accent: #ff3fd0;
+  --accent-contrast: #1a0030;
+  --accent-text: #ff7be6;
+  --accent-glow: rgba(255, 63, 208, 0.6);
+  --panel: rgba(34, 4, 56, 0.86);
+  --cyan: #38e8ff;
+  --sun: #ffb23d;
+  --focus-fill: linear-gradient(90deg, #ff3fd0, #ff8a3d);
+  --tile-radius: 0.3rem;
+  --font: "Bahnschrift", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  --shelf-tile: 12.5rem;
+  --focus-scale: 1.1;
+  --glare-color: rgba(255, 190, 255, 0.28);
+}
+
+/* ---------------------------------------------------------------- backdrop */
+
+[data-skin="user:synthwave"] #bg {
+  background: linear-gradient(to bottom, #12001f 0%, #3a0a5e 38%, #a3237f 56%, #ff5a8f 62%, #12001f 62.2%, #12001f 100%);
+  overflow: hidden;
+}
+
+/* The sun: a gradient disc cut by dark stripes that get thicker towards the horizon. */
+[data-skin="user:synthwave"] #bg::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 22%;
+  width: 34vh;
+  height: 34vh;
+  margin-left: -17vh;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #fff06a 0%, var(--sun) 35%, #ff3fa0 70%, #c21fd0 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0 50%, transparent 50% 56%, #000 56% 66%, transparent 66% 74%, #000 74% 83%, transparent 83% 91%, #000 91% 100%);
+  mask-image: linear-gradient(to bottom, #000 0 50%, transparent 50% 56%, #000 56% 66%, transparent 66% 74%, #000 74% 83%, transparent 83% 91%, #000 91% 100%);
+  filter: brightness(1.35) saturate(1.2);
+  z-index: 0;
+}
+
+/* Grid floor in perspective, below the horizon. */
+[data-skin="user:synthwave"] #bg::after {
+  content: "";
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  top: 62%;
+  bottom: -40%;
+  background:
+    repeating-linear-gradient(to right, rgba(56, 232, 255, 0.4) 0 0.12rem, transparent 0.12rem 5rem),
+    repeating-linear-gradient(to bottom, rgba(56, 232, 255, 0.4) 0 0.12rem, transparent 0.12rem 3.4rem),
+    linear-gradient(to bottom, rgba(255, 63, 208, 0.35), transparent 40%);
+  transform: perspective(40rem) rotateX(62deg);
+  transform-origin: 50% 0;
+  z-index: 0;
+}
+
+[data-skin="user:synthwave"] .bg-ambient {
+  display: none;
+}
+
+/* Game art stays visible but quiet, so text on top stays legible. */
+[data-skin="user:synthwave"] .bg-layer {
+  filter: blur(1.2rem) saturate(1.4) hue-rotate(-12deg);
+}
+
+[data-skin="user:synthwave"] .bg-layer.visible {
+  opacity: 0.4;
+}
+
+[data-skin="user:synthwave"] .bg-shade {
+  background:
+    linear-gradient(to right, rgba(18, 0, 31, 0.88), rgba(18, 0, 31, 0.2) 60%),
+    linear-gradient(to bottom, rgba(18, 0, 31, 0.5), rgba(18, 0, 31, 0.1) 35%, rgba(18, 0, 31, 0.78));
+}
+
+/* ---------------------------------------------------------------- header */
+
+[data-skin="user:synthwave"] #tab-list li {
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+}
+
+[data-skin="user:synthwave"] #tab-list li.active {
+  color: #fff;
+  border-color: var(--cyan);
+  text-shadow: 0 0 0.9rem rgba(56, 232, 255, 0.8);
+}
+
+[data-skin="user:synthwave"] #clock {
+  color: var(--cyan);
+  text-shadow: 0 0 0.8rem rgba(56, 232, 255, 0.6);
+}
+
+/* ---------------------------------------------------------------- titles */
+
+[data-skin="user:synthwave"] .hero-info h1,
+[data-skin="user:synthwave"] .detail-title,
+[data-skin="user:synthwave"] .grid-title h2,
+[data-skin="user:synthwave"] .settings-heading {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-shadow: 0.1rem 0.1rem 0 var(--accent), 0 0 1.6rem rgba(255, 63, 208, 0.55);
+}
+
+/* The base rule display:-webkit-box beats the hidden attribute, so a hidden title (clear logo shown) would peek out under the logo. */
+[data-skin="user:synthwave"] .hero-info h1[hidden] {
+  display: none;
+}
+
+[data-skin="user:synthwave"] .meta {
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- tiles */
+
+[data-skin="user:synthwave"] .tile {
+  box-shadow: 0 0 0 0.12rem rgba(56, 232, 255, 0.55), 0 0.5rem 1.4rem rgba(0, 0, 0, 0.55);
+}
+
+[data-skin="user:synthwave"] .tile.focused {
+  /* White inner ring, hot pink outer ring, glow: unmistakable at TV distance. */
+  box-shadow:
+    0 0 0 0.2rem #fff,
+    0 0 0 0.45rem var(--accent),
+    0 0 2.4rem 0.6rem var(--accent-glow),
+    0 1rem 2.5rem rgba(0, 0, 0, 0.6);
+}
+
+[data-skin="user:synthwave"] .tile.running::after {
+  animation: none;
+  border-color: var(--cyan);
+  opacity: 1;
+}
+
+[data-skin="user:synthwave"] .tile-label {
+  color: var(--muted);
+}
+
+[data-skin="user:synthwave"] .tile.focused .tile-label {
+  color: #fff;
+  text-shadow: 0 0 0.8rem var(--accent-glow);
+}
+
+[data-skin="user:synthwave"] .tile-special {
+  background: var(--panel);
+  border: 0.12rem solid var(--cyan);
+  color: var(--cyan);
+}
+
+[data-skin="user:synthwave"] .tile-special.focused {
+  background: var(--focus-fill);
+  border-color: #fff;
+  color: var(--accent-contrast);
+}
+
+[data-skin="user:synthwave"] .art-fallback {
+  background: linear-gradient(to top, rgba(18, 0, 31, 0.85), transparent 55%);
+}
+
+/* ---------------------------------------------------------------- panels and lists */
+
+[data-skin="user:synthwave"] .settings li,
+[data-skin="user:synthwave"] .about,
+[data-skin="user:synthwave"] .menu li {
+  background: var(--panel);
+  border: 0.1rem solid rgba(56, 232, 255, 0.35);
+  border-left: 0.3rem solid var(--cyan);
+  border-radius: 0.3rem;
+}
+
+[data-skin="user:synthwave"] .settings-cats li {
+  border-radius: 0.3rem;
+  color: var(--muted);
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+[data-skin="user:synthwave"] .settings-cats li.focused {
+  color: var(--fg);
+  background: var(--panel);
+  border-color: var(--accent);
+  box-shadow: 0 0 1.4rem var(--accent-glow);
+}
+
+[data-skin="user:synthwave"] .settings-cats.inactive li.focused {
+  border-color: rgba(255, 63, 208, 0.55);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: none;
+}
+
+/* Focused row: filled pink to orange, dark text. */
+[data-skin="user:synthwave"] .settings li.focused,
+[data-skin="user:synthwave"] .menu li.focused {
+  --fg: #1a0030;
+  --muted: rgba(26, 0, 48, 0.88);
+  background: var(--focus-fill);
+  color: #1a0030;
+  border-color: #fff;
+  border-left-color: #fff;
+  box-shadow: 0 0 1.6rem var(--accent-glow);
+  transform: translateX(0.6rem);
+}
+
+[data-skin="user:synthwave"] .settings li.focused .pill.on {
+  background: #1a0030;
+  color: #fff;
+}
+
+[data-skin="user:synthwave"] .settings li.focused .pill.off {
+  background: rgba(26, 0, 48, 0.2);
+  color: #1a0030;
+}
+
+[data-skin="user:synthwave"] .pill {
+  border-radius: 0.3rem;
+}
+
+[data-skin="user:synthwave"] .pill.off {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--fg);
+}
+
+[data-skin="user:synthwave"] .dialog {
+  background: #1d0033;
+  border: 0.15rem solid var(--accent);
+  border-radius: 0.4rem;
+  box-shadow: 0 0 3rem var(--accent-glow), 0 2rem 5rem rgba(0, 0, 0, 0.7);
+}
+
+[data-skin="user:synthwave"] .dialog-title,
+[data-skin="user:synthwave"] .about h3 {
+  color: var(--cyan);
+}
+
+[data-skin="user:synthwave"] #toast {
+  background: #1d0033;
+  color: #fff;
+  border: 0.15rem solid var(--cyan);
+  border-radius: 0.3rem;
+}
+
+/* ---------------------------------------------------------------- buttons, hints, glyphs */
+
+[data-skin="user:synthwave"] .glyph {
+  border-radius: 0.3rem;
+  background: transparent;
+  border: 0.1rem solid var(--cyan);
+  color: var(--cyan);
+}
+
+[data-skin="user:synthwave"] .btn-a { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
+[data-skin="user:synthwave"] .btn-b { background: var(--sun); border-color: var(--sun); color: #1a0030; }
+
+[data-skin="user:synthwave"] .hint {
+  color: var(--fg);
+}
+
+[data-skin="user:synthwave"] #hints {
+  background: linear-gradient(to top, rgba(18, 0, 31, 0.8), transparent);
+}
+
+[data-skin="user:synthwave"] .action {
+  border-radius: 0.3rem;
+  border: 0.12rem solid var(--cyan);
+  color: var(--cyan);
+  background: rgba(18, 0, 31, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+[data-skin="user:synthwave"] .action.focused {
+  background: var(--focus-fill);
+  border-color: #fff;
+  color: var(--accent-contrast);
+  transform: scale(1.06);
+  box-shadow: 0 0 0 0.15rem var(--accent), 0 0 2rem var(--accent-glow);
+}
+
+[data-skin="user:synthwave"] .detail-info dt {
+  color: var(--cyan);
+}
+
+/* Artwork picker: focused tile is filled, so its text turns dark. */
+[data-skin="user:synthwave"] .pick-tile.focused .pick-source,
+[data-skin="user:synthwave"] .pick-tile.focused.current .pick-source,
+[data-skin="user:synthwave"] .pick-tile.focused.pick-action {
+  color: var(--accent-contrast);
+}
+
+/* ---------------------------------------------------------------- HDR */
+
+@supports (color: color(display-p3 1 1 1)) {
+  :root[data-skin="user:synthwave"][data-hdr] {
+    --accent: color(display-p3 1 0.2 0.85);
+    --cyan: color(display-p3 0.1 0.95 1);
+    --accent-glow: color(display-p3 1 0.2 0.85 / 0.75);
+  }
+}
+
+/* ---------------------------------------------------------------- calm mode */
+
+/* Respect reduced motion: no tilt, no reflection (the base style hides it), no transitions on the focus. */
+:root[data-skin="user:synthwave"][data-motion="off"] {
+  --tilt-scale: 0;
+}
+
+:root[data-skin="user:synthwave"][data-motion="off"] .tile,
+:root[data-skin="user:synthwave"][data-motion="off"] .tile.focused,
+:root[data-skin="user:synthwave"][data-motion="off"] .settings li,
+:root[data-skin="user:synthwave"][data-motion="off"] .action {
+  transition: none;
+  animation: none;
+}
+
+/* The reflection on the focused tile keeps still instead of drifting back and forth while idle. */
+:root[data-skin="user:synthwave"][data-motion="on"] .tile.focused > .art > .glare {
+  animation: none;
+}

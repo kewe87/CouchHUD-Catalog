@@ -1,0 +1,2 @@
+# Release archives are attached to GitHub releases, never committed.
+*.zip
