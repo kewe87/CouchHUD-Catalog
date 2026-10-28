@@ -1,0 +1,9 @@
+{
+  "name": { "de": "Neonstadt", "en": "Neon City" },
+  "description": {
+    "de": "Neon-Gelb auf Schwarz, Scanlines, Glitch und harte Kanten.",
+    "en": "Neon yellow on black, scanlines, glitch and hard edges."
+  },
+  "glyphs": { "≡": "MENU" },
+  "soundSet": "neoncity"
+}

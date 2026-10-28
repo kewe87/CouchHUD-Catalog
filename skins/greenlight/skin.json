@@ -1,0 +1,9 @@
+{
+  "name": { "de": "Grünlicht", "en": "Greenlight" },
+  "description": {
+    "de": "Dunkel mit leuchtendem Grün, abgerundete Kacheln, weißer Fokus-Rahmen.",
+    "en": "Dark with bright green, rounded tiles, white focus frame."
+  },
+  "glyphs": { "≡": "☰" },
+  "soundSet": "greenlight"
+}

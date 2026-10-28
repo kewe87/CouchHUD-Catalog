@@ -1,0 +1,8 @@
+{
+  "name": { "de": "Tiefsee", "en": "Deep Sea" },
+  "description": {
+    "de": "Klassisches Konsolenmenü: Wellen in Tiefblau, quadratische Kacheln in einer Reihe.",
+    "en": "Classic console menu: deep blue waves, square tiles in one row."
+  },
+  "soundSet": "deepsea"
+}

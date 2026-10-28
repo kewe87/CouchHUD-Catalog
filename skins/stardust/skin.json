@@ -1,4 +1,7 @@
 {
-  "name": "Sternenstaub",
-  "description": "Dunkel und ruhig: die Spielgrafik füllt den Hintergrund, kleine abgerundete Kacheln oben links, schlanke Schrift, sanftes Leuchten im Fokus"
+  "name": { "de": "Sternenstaub", "en": "Stardust" },
+  "description": {
+    "de": "Dunkel und ruhig: die Spielgrafik füllt den Hintergrund, kleine abgerundete Kacheln oben links, schlanke Schrift, sanftes Leuchten im Fokus",
+    "en": "Dark and calm: the game's artwork fills the background, small rounded tiles at the top left, slim type, a soft glow on the focus"
+  }
 }

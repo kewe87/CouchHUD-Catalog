@@ -1,0 +1,8 @@
+{
+  "name": { "de": "Nova", "en": "Nova" },
+  "description": {
+    "de": "Futuristisch: Glas, Aurora-Licht und holografischer Fokus.",
+    "en": "Futuristic: glass, aurora light and a holographic focus."
+  },
+  "soundSet": "nova"
+}
