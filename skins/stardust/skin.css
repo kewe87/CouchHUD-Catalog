@@ -1,0 +1,563 @@
+/*
+ * Sternenstaub / Stardust: a skin for CouchHUD.
+ * Dark and calm: the game's artwork fills the screen, a row of small rounded tiles sits at the top left,
+ * the focused tile grows and its title stands right below it. Thin type, a soft glow on the focus.
+ *
+ * Own work, no third-party fonts, pictures or sounds: everything is CSS and one small self-drawn SVG (the pointer).
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+:root[data-skin="user:stardust"] {
+  --bg: #04060b;
+  --fg: #f5f7fc;
+  --muted: rgba(228, 234, 248, 0.76);
+  /* Monochrome accent: focus, pills and bars are white with dark text, the glow is a cool blue. */
+  --accent: #eef3ff;
+  --accent-contrast: #070a12;
+  --accent-text: #b8cdff;
+  --accent-glow: rgba(140, 180, 255, 0.5);
+  --panel: rgba(20, 24, 36, 0.66);
+  --sd-line: rgba(255, 255, 255, 0.12);
+  --sd-focus-bg: rgba(255, 255, 255, 0.13);
+  --sd-ring: 0 0 0 0.15rem #fff, 0 0 0 0.4rem rgba(255, 255, 255, 0.12), 0 0 2.2rem 0.3rem var(--accent-glow);
+  --font: "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --tile-radius: 0.8rem;
+  /* Small square tiles on Home; the focused one is about one and a half times as big. */
+  --shelf-tile: 6.4rem;
+  --sd-tile-focus: 10rem;
+  --sd-gap: 0.9rem;
+  --focus-scale: 1.05;
+  --ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+  /* Calm: barely any tilt, a faint reflection. */
+  --tilt-scale: 0.35;
+  --glare-color: rgba(255, 255, 255, 0.16);
+  /* Pointer: a slim white arrow with a dark rim and a small four-point spark; the tip is the hotspot. */
+  --pointer: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><defs><linearGradient id='f' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23ffffff'/><stop offset='1' stop-color='%23d6e2ff'/></linearGradient></defs><path d='M6 4 L6 36 L14.5 28.6 L20.2 40.6 L25.8 38.1 L20.2 26.4 L31.6 26.2 Z' fill='url(%23f)' stroke='%230b0e16' stroke-width='3' stroke-linejoin='round' paint-order='stroke'/><path d='M38 3.5 Q38.9 8.6 43.5 9.5 Q38.9 10.4 38 15.5 Q37.1 10.4 32.5 9.5 Q37.1 8.6 38 3.5 Z' fill='%23ffffff' stroke='%230b0e16' stroke-width='1.6' stroke-linejoin='round' paint-order='stroke'/></svg>");
+  --pointer-size: 4.4rem;
+  --pointer-hx: 0.125;
+  --pointer-hy: 0.083;
+}
+
+[data-skin="user:stardust"] body {
+  background: radial-gradient(120% 90% at 70% 0%, #101a33 0%, #070b16 45%, var(--bg) 100%);
+  letter-spacing: 0.005em;
+}
+
+/* ------------------------------------------------------------------ backdrop */
+
+/* The artwork is shown sharp and whole, not blurred: it is the room the tiles float in. */
+[data-skin="user:stardust"] .bg-layer {
+  inset: -1rem;
+  filter: none;
+  transform: scale(1.01);
+  transition: opacity 0.9s var(--ease), transform 14s linear, filter 0.6s var(--ease);
+  background:
+    radial-gradient(90% 70% at 72% 18%, hsl(var(--h) 55% 26% / 0.9), transparent 70%),
+    radial-gradient(70% 60% at 10% 95%, hsl(calc(var(--h) + 30) 45% 14% / 0.85), transparent 65%),
+    var(--bg);
+  background-size: cover;
+  background-position: center;
+}
+
+[data-skin="user:stardust"] .bg-layer.visible {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+/* Away from Home the picture steps back, so lists and grids stay calm and readable. */
+[data-skin="user:stardust"] body:not([data-view="home"]):not([data-view="detail"]) .bg-layer {
+  filter: blur(1.6rem) saturate(1.1) brightness(0.75);
+}
+
+[data-skin="user:stardust"] .bg-ambient {
+  opacity: 0.2;
+}
+
+/* Dark at the top (header and tiles), dark at the bottom (hints), a veil on the left for the title. */
+[data-skin="user:stardust"] .bg-shade {
+  background:
+    linear-gradient(to bottom, rgba(4, 6, 11, 0.82) 0%, rgba(4, 6, 11, 0.55) 22%, rgba(4, 6, 11, 0.2) 48%, rgba(4, 6, 11, 0.25) 72%, rgba(4, 6, 11, 0.88) 100%),
+    linear-gradient(to right, rgba(4, 6, 11, 0.62) 0%, rgba(4, 6, 11, 0.25) 40%, transparent 65%);
+}
+
+/* The game page keeps the picture sharp, with more shade at the bottom for the description. */
+[data-skin="user:stardust"] body[data-view="detail"] .bg-shade {
+  background:
+    linear-gradient(to bottom, rgba(4, 6, 11, 0.8) 0%, rgba(4, 6, 11, 0.35) 25%, rgba(4, 6, 11, 0.35) 45%, rgba(4, 6, 11, 0.9) 100%),
+    linear-gradient(to right, rgba(4, 6, 11, 0.75) 0%, rgba(4, 6, 11, 0.35) 50%, rgba(4, 6, 11, 0.55) 100%);
+}
+
+[data-skin="user:stardust"] body:not([data-view="home"]):not([data-view="detail"]) .bg-shade {
+  background:
+    linear-gradient(to bottom, rgba(4, 6, 11, 0.7), rgba(4, 6, 11, 0.6) 40%, rgba(4, 6, 11, 0.85)),
+    linear-gradient(to right, rgba(4, 6, 11, 0.4), transparent 70%);
+}
+
+/* Stardust: a few tiny points of light in the upper part of Home, very faint, drifting in and out. */
+[data-skin="user:stardust"] #bg::after {
+  display: none;
+}
+
+[data-skin="user:stardust"] body[data-view="home"] #bg::after {
+  display: block;
+  content: "";
+  position: absolute;
+  inset: 0 0 35% 0;
+  pointer-events: none;
+  opacity: 0.55;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.9) 0 0.06rem, rgba(170, 200, 255, 0.25) 0.1rem, transparent 0.3rem),
+    radial-gradient(circle at 27% 9%, rgba(210, 225, 255, 0.8) 0 0.05rem, transparent 0.1rem),
+    radial-gradient(circle at 41% 26%, rgba(255, 255, 255, 0.7) 0 0.04rem, transparent 0.09rem),
+    radial-gradient(circle at 58% 12%, rgba(200, 220, 255, 0.9) 0 0.07rem, transparent 0.14rem),
+    radial-gradient(circle at 66% 31%, rgba(255, 255, 255, 0.6) 0 0.04rem, transparent 0.09rem),
+    radial-gradient(circle at 74% 7%, rgba(255, 255, 255, 0.8) 0 0.05rem, transparent 0.11rem),
+    radial-gradient(circle at 83% 22%, rgba(220, 230, 255, 0.9) 0 0.06rem, transparent 0.13rem),
+    radial-gradient(circle at 91% 40%, rgba(255, 255, 255, 0.6) 0 0.04rem, transparent 0.09rem),
+    radial-gradient(circle at 96% 11%, rgba(255, 255, 255, 0.7) 0 0.05rem, transparent 0.1rem),
+    radial-gradient(circle at 50% 46%, rgba(210, 225, 255, 0.5) 0 0.04rem, transparent 0.09rem),
+    radial-gradient(circle at 33% 52%, rgba(255, 255, 255, 0.45) 0 0.04rem, transparent 0.08rem),
+    radial-gradient(circle at 87% 58%, rgba(255, 255, 255, 0.45) 0 0.04rem, transparent 0.08rem),
+    radial-gradient(60% 50% at 80% 0%, rgba(150, 185, 255, 0.1), transparent 70%);
+  animation: sd-twinkle 9s ease-in-out infinite alternate;
+}
+
+@keyframes sd-twinkle {
+  from { opacity: 0.35; }
+  to { opacity: 0.65; }
+}
+
+/* ------------------------------------------------------------------ header */
+
+[data-skin="user:stardust"] #top {
+  padding-top: 1.8rem;
+}
+
+[data-skin="user:stardust"] #tabs {
+  gap: 1rem;
+}
+
+[data-skin="user:stardust"] #tab-list {
+  gap: 1.5rem;
+}
+
+[data-skin="user:stardust"] #status {
+  gap: 1.1rem;
+}
+
+[data-skin="user:stardust"] #tab-list li {
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  border-bottom-width: 0.14rem;
+}
+
+/* The active tab: white, a little bolder, a short bar and a soft glow. */
+[data-skin="user:stardust"] #tab-list li.active {
+  color: #fff;
+  font-weight: 600;
+  border-color: #fff;
+  text-shadow: 0 0 1.2rem rgba(150, 190, 255, 0.65);
+}
+
+[data-skin="user:stardust"] #clock {
+  font-size: 1.6rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+[data-skin="user:stardust"] #weather {
+  font-weight: 400;
+}
+
+/* ------------------------------------------------------------------ tiles */
+
+[data-skin="user:stardust"] .tile {
+  box-shadow: 0 0.5rem 1.4rem rgba(0, 0, 0, 0.5);
+  transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease), width 0.32s var(--ease), opacity 0.28s;
+}
+
+[data-skin="user:stardust"] .tile.focused {
+  animation: none;
+  box-shadow: var(--sd-ring), 0 1rem 2.4rem rgba(0, 0, 0, 0.55);
+}
+
+[data-skin="user:stardust"] .fav {
+  color: #fff;
+  font-size: 1rem;
+  text-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.9), 0 0 0.8rem rgba(150, 190, 255, 0.8);
+}
+
+[data-skin="user:stardust"] .running-badge {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ------------------------------------------------------------------ home */
+
+/* The row of tiles at the top, the title of the focused tile right below it; the rest of the screen is the artwork. */
+[data-skin="user:stardust"] .home {
+  justify-content: flex-start;
+  gap: 0;
+  padding-top: 0.6rem;
+  padding-bottom: 2rem;
+}
+
+[data-skin="user:stardust"] .home .shelf-wrap {
+  order: -1;
+  padding-top: 2rem;
+  padding-bottom: 1.2rem;
+}
+
+[data-skin="user:stardust"] .shelf {
+  align-items: flex-start;
+  gap: var(--sd-gap);
+}
+
+[data-skin="user:stardust"] .shelf .cover,
+[data-skin="user:stardust"] .shelf .hero-art,
+[data-skin="user:stardust"] .shelf .tile-special {
+  aspect-ratio: 1;
+}
+
+/* "Continue playing" is a square like the others here; the row stays one calm line. */
+[data-skin="user:stardust"] .shelf .tile.tile-hero {
+  width: var(--shelf-tile);
+}
+
+/* The focused tile grows in place (no zoom), its neighbours make room. */
+[data-skin="user:stardust"] .shelf .tile.focused,
+[data-skin="user:stardust"] .shelf .tile.tile-hero.focused {
+  width: var(--sd-tile-focus);
+  transform: none;
+}
+
+[data-skin="user:stardust"] .shelf .tile:not(.focused) {
+  opacity: 0.92;
+}
+
+[data-skin="user:stardust"] .shelf-label {
+  top: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+[data-skin="user:stardust"] .tile-special {
+  gap: 0.3rem;
+  border: 0.08rem solid var(--sd-line);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(1rem);
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-align: center;
+  padding: 0.4rem;
+  line-height: 1.15;
+}
+
+[data-skin="user:stardust"] .tile-special .special-icon {
+  font-size: 1.8rem;
+}
+
+[data-skin="user:stardust"] .tile-special.focused {
+  background: rgba(30, 36, 52, 0.85);
+  font-size: 1.05rem;
+}
+
+[data-skin="user:stardust"] .tile-special.focused .special-icon {
+  font-size: 2.6rem;
+}
+
+/* The title stands under the focused tile: one small tile further in once the focus has left the first tile. */
+[data-skin="user:stardust"] .home .hero-info {
+  --hero-height: 11rem;
+  justify-content: flex-start;
+  padding-left: 0;
+  transition: padding-left 0.32s var(--ease);
+}
+
+[data-skin="user:stardust"] .home:has(.shelf > .tile:not(:first-child).focused) .hero-info {
+  padding-left: calc(var(--shelf-tile) + var(--sd-gap));
+}
+
+[data-skin="user:stardust"] .hero-info h1 {
+  font-size: 2.6rem;
+  font-weight: 300;
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+  max-width: 48rem;
+  text-shadow: 0 0.15rem 1rem rgba(0, 0, 0, 0.75), 0 0 0.3rem rgba(0, 0, 0, 0.5);
+}
+
+[data-skin="user:stardust"] .hero-logo {
+  max-width: 24rem;
+  max-height: 6.5rem;
+  object-position: left top;
+}
+
+[data-skin="user:stardust"] .meta {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(236, 241, 252, 0.86);
+  text-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, 0.8);
+}
+
+[data-skin="user:stardust"] .hero-info .meta {
+  margin-top: 0.6rem;
+}
+
+/* ------------------------------------------------------------------ grids */
+
+[data-skin="user:stardust"] .grid-title h2,
+[data-skin="user:stardust"] .files-head h2 {
+  font-weight: 300;
+  font-size: 2.1rem;
+}
+
+[data-skin="user:stardust"] .grid-title .meta {
+  text-shadow: none;
+}
+
+[data-skin="user:stardust"] .tile-label {
+  font-weight: 400;
+}
+
+[data-skin="user:stardust"] .tile.focused .tile-label {
+  font-weight: 600;
+}
+
+/* Generated banner: a quiet night-sky gradient in the item's hue, with one soft light. */
+[data-skin="user:stardust"] .art-fallback {
+  font-weight: 600;
+  background:
+    radial-gradient(80% 60% at 78% 12%, hsl(var(--h) 70% 70% / 0.32), transparent 70%),
+    linear-gradient(170deg, hsl(var(--h) 40% 30% / 0.35), hsl(var(--h) 50% 8% / 0.75));
+}
+
+/* The small square shelf tiles: a long single word gets a hyphen instead of a stray last letter. */
+[data-skin="user:stardust"] .shelf .gen-name {
+  font-size: 0.95rem;
+  line-height: 1.15;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+[data-skin="user:stardust"] .gen-mark {
+  font-weight: 200;
+  opacity: 0.3;
+}
+
+/* ------------------------------------------------------------------ lists, settings */
+
+[data-skin="user:stardust"] .settings li,
+[data-skin="user:stardust"] .about {
+  background: var(--panel);
+  border: 0.1rem solid var(--sd-line);
+  border-radius: 0.9rem;
+  backdrop-filter: blur(1.2rem) saturate(1.2);
+}
+
+[data-skin="user:stardust"] .settings li.focused,
+[data-skin="user:stardust"] .menu li.focused,
+[data-skin="user:stardust"] .quick-row.focused,
+[data-skin="user:stardust"] .check-row.focused {
+  background: var(--sd-focus-bg);
+  border-color: rgba(255, 255, 255, 0.92);
+  transform: none;
+}
+
+[data-skin="user:stardust"] .settings strong {
+  font-weight: 600;
+}
+
+[data-skin="user:stardust"] .settings-heading {
+  font-weight: 300;
+  font-size: 2.1rem;
+}
+
+[data-skin="user:stardust"] .settings-cats li {
+  border-radius: 0.9rem;
+  font-weight: 400;
+}
+
+/* A category name stays on one line, also bold in the focus ("Wetter & Smart Home" wrapped): the list is a bit wider than in the
+   built-in skins (the bold slim type runs wider), and a name that still does not fit ends in "...". */
+[data-skin="user:stardust"] .settings-center {
+  grid-template-columns: 21.5rem minmax(0, 1fr);
+}
+
+[data-skin="user:stardust"] .settings-cats li strong {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[data-skin="user:stardust"] .settings-cats li.focused {
+  color: #fff;
+  font-weight: 600;
+  background: var(--sd-focus-bg);
+  border-color: rgba(255, 255, 255, 0.92);
+}
+
+[data-skin="user:stardust"] .settings-cats.inactive li.focused {
+  border-color: transparent;
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-skin="user:stardust"] .pill {
+  font-weight: 600;
+}
+
+[data-skin="user:stardust"] .pill.off {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 0.08rem rgba(255, 255, 255, 0.22);
+}
+
+/* ------------------------------------------------------------------ detail page */
+
+[data-skin="user:stardust"] .detail-title {
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.75);
+}
+
+/* Actions are pills: the focused one turns white with dark text. */
+[data-skin="user:stardust"] .action {
+  background: rgba(20, 24, 36, 0.6);
+  border-color: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(1rem);
+  font-weight: 600;
+}
+
+[data-skin="user:stardust"] .action.focused {
+  background: #fff;
+  border-color: #fff;
+  color: var(--accent-contrast);
+  transform: scale(1.04);
+  box-shadow: 0 0 0 0.3rem rgba(255, 255, 255, 0.16), 0 0 2rem var(--accent-glow);
+}
+
+[data-skin="user:stardust"] .age-badge {
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ dialogs, menus, toasts */
+
+[data-skin="user:stardust"] #overlay {
+  background: rgba(3, 5, 10, 0.62);
+  backdrop-filter: blur(0.8rem);
+}
+
+[data-skin="user:stardust"] .dialog {
+  background: rgba(16, 19, 29, 0.95);
+  border: 0.08rem solid var(--sd-line);
+  border-radius: 1.3rem;
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.65), inset 0 0.06rem 0 rgba(255, 255, 255, 0.08);
+}
+
+[data-skin="user:stardust"] .dialog-title {
+  font-weight: 400;
+  font-size: 1.7rem;
+}
+
+[data-skin="user:stardust"] .menu li {
+  border-radius: 0.8rem;
+  font-weight: 400;
+}
+
+[data-skin="user:stardust"] .menu li.focused {
+  font-weight: 600;
+}
+
+[data-skin="user:stardust"] #toast,
+[data-skin="user:stardust"] #shot-toast,
+[data-skin="user:stardust"] .notify-card {
+  background: rgba(16, 19, 29, 0.94);
+  border: 0.08rem solid var(--sd-line);
+  box-shadow: 0 1rem 2.6rem rgba(0, 0, 0, 0.55), 0 0 1.4rem rgba(140, 180, 255, 0.18);
+  backdrop-filter: blur(1.2rem);
+}
+
+[data-skin="user:stardust"] #toast {
+  font-weight: 400;
+}
+
+/* ------------------------------------------------------------------ guide menu */
+
+/* Opaque: through a see-through panel the page behind showed as a faint circle (a bright toggle). */
+[data-skin="user:stardust"] #quick {
+  background: rgb(10, 12, 20);
+  border-left: 0.08rem solid var(--sd-line);
+  box-shadow: -2rem 0 5rem rgba(0, 0, 0, 0.6);
+}
+
+[data-skin="user:stardust"] .quick-time {
+  font-weight: 200;
+}
+
+[data-skin="user:stardust"] .quick-row {
+  border-radius: 0.8rem;
+}
+
+[data-skin="user:stardust"] .quick-session {
+  border-radius: 1rem;
+  border-color: var(--sd-line);
+}
+
+/* ------------------------------------------------------------------ code entry */
+
+[data-skin="user:stardust"] .passcode h2 {
+  font-weight: 300;
+}
+
+[data-skin="user:stardust"] .passcode-key {
+  border-radius: 0.8rem;
+  border-color: var(--sd-line);
+  background: rgba(255, 255, 255, 0.07);
+  font-weight: 400;
+}
+
+/* ------------------------------------------------------------------ hints */
+
+[data-skin="user:stardust"] .hint {
+  font-weight: 400;
+}
+
+/* ------------------------------------------------------------------ calm motion */
+
+/* Reduce animations (setting or system): no growing, no drifting, no twinkling. */
+:root[data-skin="user:stardust"][data-motion="off"] #bg::after {
+  animation: none;
+}
+
+:root[data-skin="user:stardust"][data-motion="off"] .bg-layer,
+:root[data-skin="user:stardust"][data-motion="off"] .bg-layer.visible {
+  transform: none;
+  transition: opacity 0.3s;
+}
+
+:root[data-skin="user:stardust"][data-motion="off"] .tile,
+:root[data-skin="user:stardust"][data-motion="off"] .home .hero-info {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-skin="user:stardust"] #bg::after { animation: none; }
+  [data-skin="user:stardust"] .bg-layer,
+  [data-skin="user:stardust"] .bg-layer.visible { transform: none; transition: opacity 0.3s; }
+  [data-skin="user:stardust"] .tile,
+  [data-skin="user:stardust"] .home .hero-info { transition: none; }
+}
+
+/* ------------------------------------------------------------------ HDR */
+
+@supports (color: color(display-p3 1 1 1)) {
+  :root[data-skin="user:stardust"][data-hdr] {
+    --accent-glow: color(display-p3 0.5 0.68 1 / 0.7);
+    --accent-text: color(display-p3 0.74 0.82 1);
+  }
+}
