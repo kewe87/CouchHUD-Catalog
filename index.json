@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "serial": 3,
+  "serial": 4,
   "name": "CouchHUD Katalog",
   "entries": [
     {
@@ -36,7 +36,7 @@
       "folder": "CouchHud.Plugin.HomeAssistant",
       "name": "Home Assistant",
       "type": "plugin",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "minCouchHud": "0.6.3",
       "author": "kewe87",
       "description": {
@@ -57,10 +57,10 @@
         "feature": "homeAssistant"
       },
       "icon": "https://raw.githubusercontent.com/kewe87/CouchHUD-Catalog/main/icons/homeassistant.png",
-      "download": "https://github.com/kewe87/CouchHUD-Catalog/releases/download/homeassistant-1.1.0/CouchHud.Plugin.HomeAssistant-1.1.0.zip",
-      "sha256": "77c1f8afaf10855e6c0661cb2fc50869e91f4a75b873aaad6daf0d3365a54734",
-      "statement": "eyJpZCI6ImhvbWVhc3Npc3RhbnQiLCJmb2xkZXIiOiJDb3VjaEh1ZC5QbHVnaW4uSG9tZUFzc2lzdGFudCIsInZlcnNpb24iOiIxLjEuMCIsInNoYTI1NiI6Ijc3YzFmOGFmYWYxMDg1NWU2YzA2NjFjYjJmYzUwODY5ZTkxZjRhNzViODczYWFhZDZkYWYwZDMzNjVhNTQ3MzQiLCJzZGsiOjQsIm1pbkNvdWNoSHVkIjoiMC42LjMiLCJjYXBhYmlsaXRpZXMiOlsicGFnZXMiLCJ0YWJzIiwicXVpY2tBY3Rpb25zIiwiYXNzaXN0YW50Iiwibm90aWZ5IiwiYnJvd3Nlci5zaWduaW4iLCJuZXR3b3JrOmxhbiJdLCJwdWJsaXNoZXJLZXkiOiIyNDdiYmE2Mjg0OWRkZmVhYjg3NDlhMzg0ODg3OTE4MDdiZmZhMzNjNzIzNDdlYTIwOTMxODcwZGJiYjc3MDlmIiwibGljZW5zZSI6IkdQTC0zLjAtb25seSIsImF1dGhvciI6Imtld2U4NyIsIm5hbWUiOiJIb21lIEFzc2lzdGFudCIsInN1bW1hcnkiOiJMaWdodHMsIHNjZW5lcyBhbmQgc2Vuc29ycyBmcm9tIEhvbWUgQXNzaXN0YW50IG9uIHRoZSBUViwgd2l0aCBzaWduLWluIHRocm91Z2ggSG9tZSBBc3Npc3RhbnQsIGd1aWRlIG1lbnUgZW50cmllcyBhbmQgYXNzaXN0YW50IHRvb2xzIiwiaWNvbiI6eyJzaGEyNTYiOiI3NThlNmIyYzUzNzdkZGU0NTIwNjk3ZTMzYmQ0MjRiYzNmNmViZDI5NzI3MzE4MjRlNGVkMjExMjA4NDA0ZWViIiwiYnl0ZXMiOjM5MzIyfSwic2l6ZSI6ODQ5MjN9",
-      "signature": "PVw+qdE2mPiI9qiqMqgH4tz4kfX+RAbrtEJ4CL2tP85p/LZEGV6mW4uTL2i5t9UXs7yJ99fO1Xa42P+AQXrnwQ==",
+      "download": "https://github.com/kewe87/CouchHUD-Catalog/releases/download/homeassistant-1.1.1/CouchHud.Plugin.HomeAssistant-1.1.1.zip",
+      "sha256": "73699fe970d345d117de3c50d89f241bb5bb5f1c8fb48a52daa89a5a5356a2ab",
+      "statement": "eyJpZCI6ImhvbWVhc3Npc3RhbnQiLCJmb2xkZXIiOiJDb3VjaEh1ZC5QbHVnaW4uSG9tZUFzc2lzdGFudCIsInZlcnNpb24iOiIxLjEuMSIsInNoYTI1NiI6IjczNjk5ZmU5NzBkMzQ1ZDExN2RlM2M1MGQ4OWYyNDFiYjViYjVmMWM4ZmI0OGE1MmRhYTg5YTVhNTM1NmEyYWIiLCJzZGsiOjQsIm1pbkNvdWNoSHVkIjoiMC42LjMiLCJjYXBhYmlsaXRpZXMiOlsicGFnZXMiLCJ0YWJzIiwicXVpY2tBY3Rpb25zIiwiYXNzaXN0YW50Iiwibm90aWZ5IiwiYnJvd3Nlci5zaWduaW4iLCJuZXR3b3JrOmxhbiJdLCJwdWJsaXNoZXJLZXkiOiIyNDdiYmE2Mjg0OWRkZmVhYjg3NDlhMzg0ODg3OTE4MDdiZmZhMzNjNzIzNDdlYTIwOTMxODcwZGJiYjc3MDlmIiwibGljZW5zZSI6IkdQTC0zLjAtb25seSIsImF1dGhvciI6Imtld2U4NyIsIm5hbWUiOiJIb21lIEFzc2lzdGFudCIsInN1bW1hcnkiOiJMaWdodHMsIHNjZW5lcyBhbmQgc2Vuc29ycyBmcm9tIEhvbWUgQXNzaXN0YW50IG9uIHRoZSBUViwgd2l0aCBzaWduLWluIHRocm91Z2ggSG9tZSBBc3Npc3RhbnQsIGd1aWRlIG1lbnUgZW50cmllcyBhbmQgYXNzaXN0YW50IHRvb2xzIiwiaWNvbiI6eyJzaGEyNTYiOiI3NThlNmIyYzUzNzdkZGU0NTIwNjk3ZTMzYmQ0MjRiYzNmNmViZDI5NzI3MzE4MjRlNGVkMjExMjA4NDA0ZWViIiwiYnl0ZXMiOjM5MzIyfSwic2l6ZSI6ODUzMzB9",
+      "signature": "/DvNDgXDqBcA/Cli8KpL334Zqqkx0Sz/m22Lal29mG1IGkakdejIWF+qsogww9dpAwbhGe23emtOmw8f58Dvtw==",
       "sdk": 4
     },
     {
