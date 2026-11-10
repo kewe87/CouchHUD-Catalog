@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "serial": 6,
+  "serial": 7,
   "name": "CouchHUD Katalog",
   "entries": [
     {
@@ -43,8 +43,8 @@
       "name": "CaseHUD",
       "type": "plugin",
       "category": "hardware",
-      "version": "1.2.0",
-      "minCouchHud": "0.7.0",
+      "version": "1.2.1",
+      "minCouchHud": "0.7.2",
       "author": "kewe87",
       "description": {
         "de": "Schaltet LCDs in Lüftern und Pumpen von CaseHUD: Szenen, Licht, Automatik und Kühlungs-Presets wählen",
@@ -73,11 +73,11 @@
         "uninstallEntry": "CaseHUD"
       },
       "icon": "https://raw.githubusercontent.com/kewe87/CouchHUD-Catalog/main/icons/casehud.png",
-      "download": "https://github.com/kewe87/CouchHUD-Catalog/releases/download/casehud-1.2.0/CouchHud.Plugin.CaseHud-1.2.0.zip",
+      "download": "https://github.com/kewe87/CouchHUD-Catalog/releases/download/casehud-1.2.1/CouchHud.Plugin.CaseHud-1.2.1.zip",
       "sdk": 3,
-      "sha256": "b7cbac8e3c17c1b4be989803f388ba2b15e6640bc6609b36f7ee87d364ed5e6c",
-      "statement": "eyJpZCI6ImNhc2VodWQiLCJmb2xkZXIiOiJDb3VjaEh1ZC5QbHVnaW4uQ2FzZUh1ZCIsInZlcnNpb24iOiIxLjIuMCIsInNoYTI1NiI6ImI3Y2JhYzhlM2MxN2MxYjRiZTk4OTgwM2YzODhiYTJiMTVlNjY0MGJjNjYwOWIzNmY3ZWU4N2QzNjRlZDVlNmMiLCJzZGsiOjMsIm1pbkNvdWNoSHVkIjoiMC43LjAiLCJjYXBhYmlsaXRpZXMiOlsicGFnZXMiLCJxdWlja0FjdGlvbnMiLCJkb3dubG9hZHMiLCJzZXR1cC5ydW4iLCJsb2NrLnJlc3RyaWN0Iiwic3RhcnR1cC5hcmdzIiwicHJvY2VzcyIsInJlZ2lzdHJ5IiwibmF0aXZlIiwibmV0d29yazpsb29wYmFjayIsIm5ldHdvcms6aW50ZXJuZXQiLCJzZW5zb3JzLnB1Ymxpc2giXSwicHVibGlzaGVyS2V5IjoiMjQ3YmJhNjI4NDlkZGZlYWI4NzQ5YTM4NDg4NzkxODA3YmZmYTMzYzcyMzQ3ZWEyMDkzMTg3MGRiYmI3NzA5ZiIsImxpY2Vuc2UiOiJHUEwtMy4wLW9ubHkiLCJhdXRob3IiOiJrZXdlODciLCJuYW1lIjoiQ2FzZUhVRCIsInN1bW1hcnkiOiJTd2l0Y2ggYW5kIG9wZXJhdGUgdGhlIExDRHMgaW4geW91ciBmYW5zIGFuZCBwdW1wcyB0aHJvdWdoIENhc2VIVUQ6IHNjZW5lcywgYnJpZ2h0bmVzcywgbGlnaHRpbmcsIGF1dG9tYXRpb24sIHdpdGggZ3VpZGUgbWVudSBlbnRyaWVzIiwiaWNvbiI6eyJzaGEyNTYiOiIxYTM1ZDU1MDM0YzE2ZmNmZWJmZDMwODZjOThiMTgxMmQwMmQ3YWE2OTI0MjI3NTI5MTBmNmY3Y2RkNGI2MjNmIiwiYnl0ZXMiOjI3OTk2fSwic2l6ZSI6MjAxMjM2fQ==",
-      "signature": "FrG6jTbwMR/VQ2inlSZd8WExXIVKP4ztQSlnmKTCd1nkk1BBwkkG4foJfni2lcbHuffLTi4zSg2zCW06G35IMg=="
+      "sha256": "9b2a1f4e029b583ea405cea0c7b82f55d014d9de39df56d73e25e726756bec06",
+      "statement": "eyJpZCI6ImNhc2VodWQiLCJmb2xkZXIiOiJDb3VjaEh1ZC5QbHVnaW4uQ2FzZUh1ZCIsInZlcnNpb24iOiIxLjIuMSIsInNoYTI1NiI6IjliMmExZjRlMDI5YjU4M2VhNDA1Y2VhMGM3YjgyZjU1ZDAxNGQ5ZGUzOWRmNTZkNzNlMjVlNzI2NzU2YmVjMDYiLCJzZGsiOjMsIm1pbkNvdWNoSHVkIjoiMC43LjIiLCJjYXBhYmlsaXRpZXMiOlsicGFnZXMiLCJxdWlja0FjdGlvbnMiLCJkb3dubG9hZHMiLCJzZXR1cC5ydW4iLCJsb2NrLnJlc3RyaWN0Iiwic3RhcnR1cC5hcmdzIiwicHJvY2VzcyIsInJlZ2lzdHJ5IiwibmF0aXZlIiwibmV0d29yazpsb29wYmFjayIsIm5ldHdvcms6aW50ZXJuZXQiLCJzZW5zb3JzLnB1Ymxpc2giXSwicHVibGlzaGVyS2V5IjoiMjQ3YmJhNjI4NDlkZGZlYWI4NzQ5YTM4NDg4NzkxODA3YmZmYTMzYzcyMzQ3ZWEyMDkzMTg3MGRiYmI3NzA5ZiIsImxpY2Vuc2UiOiJHUEwtMy4wLW9ubHkiLCJhdXRob3IiOiJrZXdlODciLCJuYW1lIjoiQ2FzZUhVRCIsInN1bW1hcnkiOiJTd2l0Y2ggYW5kIG9wZXJhdGUgdGhlIExDRHMgaW4geW91ciBmYW5zIGFuZCBwdW1wcyB0aHJvdWdoIENhc2VIVUQ6IHNjZW5lcywgYnJpZ2h0bmVzcywgbGlnaHRpbmcsIGF1dG9tYXRpb24sIHdpdGggZ3VpZGUgbWVudSBlbnRyaWVzIiwiaWNvbiI6eyJzaGEyNTYiOiIxYTM1ZDU1MDM0YzE2ZmNmZWJmZDMwODZjOThiMTgxMmQwMmQ3YWE2OTI0MjI3NTI5MTBmNmY3Y2RkNGI2MjNmIiwiYnl0ZXMiOjI3OTk2fSwic2l6ZSI6MjA2NjQ5fQ==",
+      "signature": "S9kB2uD4MBkyQy/y+KSkPfcFZQdy/ygvlDas4D4Fr9kR0h311UBpvQojT7t88P5HEGxu2gEp4LFdXq8AnQC8gw=="
     },
     {
       "id": "vpn",
